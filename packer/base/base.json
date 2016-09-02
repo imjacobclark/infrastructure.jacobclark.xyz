@@ -21,6 +21,11 @@
         },
         {
             "type": "file",
+            "source": "./systemd/startup-provisioner.service",
+            "destination": "/etc/systemd/system/startup-provisioner.service"
+        },
+        {
+            "type": "file",
             "source": "./packer/base/startup.sh",
             "destination": "/etc/startup.sh"
         },

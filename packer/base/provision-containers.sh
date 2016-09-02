@@ -1,11 +1,10 @@
-apt-get update
-
-rm /etc/rc.local
-echo "bash /etc/startup.sh" > /etc/rc.local
-chmod +x /etc/rc.local
+# Enable startup provisioner
+echo "Enable startup provisioner"
+systemctl enable startup-provisioner.service
 
 # Install Docker Engine
 echo "Bringing up the Docker engine"
+apt-get update
 apt-get install -y apt-transport-https ca-certificates curl
 apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list
