@@ -1,6 +1,8 @@
 apt-get update
 
-'bash /etc/startup.sh' >> /etc/rc.local
+rm /etc/rc.local
+echo "bash /etc/startup.sh" > /etc/rc.local
+chmod +x /etc/rc.local
 
 # Install Docker Engine
 echo "Bringing up the Docker engine"
