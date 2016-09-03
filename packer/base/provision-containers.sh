@@ -14,6 +14,9 @@ apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 apt-get install -y docker-engine
 service docker start
 
+# Clone required repositories 
+git clone https://github.com/imjacobclark/blog.jacob.uk.com.git /etc/blog.jacob.uk.com
+
 # Spin up containers
 echo "Bringing up main container infrastructure"
 docker run --restart=always -d -p 80:80 --name nginx -v /etc/nginx.conf:/etc/nginx/nginx.conf nginx
@@ -22,11 +25,11 @@ docker run --restart=always -d -p 3001:3000 --name ngaas.jacob.uk.com imjacobcla
 docker run --restart=always -d -p 3002:3000 --name api.devnews.today imjacobclark/devnews-core
 docker run --restart=always -d -p 3003:3000 --name devnews.today imjacobclark/devnews-web
 docker run --restart=always -d -p 3004:3000 --name cors-container imjacobclark/cors-container
-
-echo "Bringing up monitoring containers"
+docker run --restart=always -d -p 3005:4000 --volume=/etc/blog.jacob.uk.com:/srv/jekyll --name=jekyll jekyll/jekyll
+docker run --restart=always -d --name=grafana -p 3006:3000 grafana/grafana
 docker run --restart=always --volume=/:/rootfs:ro --volume=/var/run:/var/run:rw --volume=/sys:/sys:ro --volume=/var/lib/docker/:/var/lib/docker:ro --publish=8080:8080 --detach=true --name=cadvisor google/cadvisor:latest
-docker run --restart=always -d -p 9090:9090 -v /etc/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus -config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000
-docker run --restart=always -d -p 9100:9100 -v "/proc:/host/proc" -v "/sys:/host/sys" -v "/:/rootfs" --net="host" prom/node-exporter -collector.procfs /host/proc -collector.sysfs /host/proc -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)"
+docker run --restart=always -d --name=prometheus -p 9090:9090 -v /etc/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus -config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000
+docker run --restart=always -d --name=node-exporter -p 9100:9100 -v "/proc:/host/proc" -v "/sys:/host/sys" -v "/:/rootfs" --net="host" prom/node-exporter -collector.procfs /host/proc -collector.sysfs /host/proc -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)"
 
 #docker run --restart=always -d -p 3004:3000 -e DISCOGS_KEY='SZJTcWkygwiezOEEsxxw' -e DISCOGS_SECRET='' --name playlistr.jacob.uk.com imjacobclark/playlistr 
 #docker run --restart=always -d -e TELEGRAM_BOT_TOKEN='' --name telegram-name-generator-bot imjacobclark/name-generator-telegram-bot
