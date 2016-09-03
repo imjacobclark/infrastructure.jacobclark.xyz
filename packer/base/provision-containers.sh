@@ -14,8 +14,10 @@ apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 apt-get install -y docker-engine
 service docker start
 
-# Clone required repositories 
+# Set up blog
 git clone https://github.com/imjacobclark/blog.jacob.uk.com.git /etc/blog.jacob.uk.com
+adduser --disabled-password --gecos "" jekyll
+chown jekyll:jekyll /etc/blog.jacob.uk.com/
 
 # Spin up containers
 echo "Bringing up main container infrastructure"
