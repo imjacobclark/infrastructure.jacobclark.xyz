@@ -1,7 +1,3 @@
-# Enable startup provisioner
-echo "Enable startup provisioner"
-systemctl enable startup-provisioner.service
-
 # Install Docker Engine
 echo "Bringing up the Docker engine"
 apt-get update
@@ -14,14 +10,33 @@ apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 apt-get install -y docker-engine
 service docker start
 
+# Set up Caddy
+echo "Bringing up Caddy"
+curl https://getcaddy.com | bash
+groupadd -g 33 www-data
+useradd -g www-data --no-user-group --home-dir /var/www --no-create-home --shell /usr/sbin/nologin --system --uid 33 www-data
+mkdir /etc/caddy
+chown -R root:www-data /etc/caddy
+mkdir /etc/ssl/caddy
+chown -R www-data:root /etc/ssl/caddy
+chmod 0770 /etc/ssl/caddy
+touch /var/log/access.log
+chown -R www-data:www-data /var/log/access.log
+
 # Set up blog
 git clone https://github.com/imjacobclark/blog.jacob.uk.com.git /etc/blog.jacob.uk.com
 adduser --disabled-password --gecos "" jekyll
 chown jekyll:jekyll /etc/blog.jacob.uk.com/
 
+# Enable startup provisioner
+echo "Bringing up systemd"
+systemctl daemon-reload
+systemctl enable startup-provisioner.service
+systemctl start caddy.service
+systemctl enable caddy.service
+
 # Spin up containers
 echo "Bringing up main container infrastructure"
-docker run --restart=always -d -p 80:80 --name nginx -v /etc/nginx.conf:/etc/nginx/nginx.conf nginx
 docker run --restart=always -d -p 3000:3000 --name jacob.uk.com imjacobclark/jacob.uk.com
 docker run --restart=always -d -p 3001:3000 --name ngaas.jacob.uk.com imjacobclark/ngaas
 docker run --restart=always -d -p 3002:3000 --name api.devnews.today imjacobclark/devnews-core

@@ -11,13 +11,8 @@
     "provisioners": [
         {
             "type": "file",
-            "source": "./nginx/nginx.conf",
-            "destination": "/etc/nginx.conf"
-        },
-        {
-            "type": "file",
-            "source": "./prometheus/prometheus.yml",
-            "destination": "/etc/prometheus.yml"
+            "source": "./startup/startup.sh",
+            "destination": "/etc/startup.sh"
         },
         {
             "type": "file",
@@ -26,12 +21,22 @@
         },
         {
             "type": "file",
-            "source": "./packer/base/startup.sh",
-            "destination": "/etc/startup.sh"
+            "source": "./prometheus/prometheus.yml",
+            "destination": "/etc/prometheus.yml"
+        },
+        {
+            "type": "file",
+            "source": "./caddy/Caddyfile",
+            "destination": "/etc/Caddyfile"
+        },
+        {
+            "type": "file",
+            "source": "./systemd/caddy.service",
+            "destination": "/etc/systemd/system/caddy.service"
         },
         {
             "type": "shell",
-            "script": "./packer/base/provision-containers.sh"
+            "script": "./provisioner/provision-containers.sh"
         }
     ]
 }
