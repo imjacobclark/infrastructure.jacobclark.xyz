@@ -13,3 +13,8 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['{{PRIVATE_IP}}:8080']
+
+  - job_name: 'caddy'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9180']

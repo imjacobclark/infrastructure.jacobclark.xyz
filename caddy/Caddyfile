@@ -1,5 +1,6 @@
 jacob.uk.com {
-    tls jacob.jh.clark@googlemail.com 
+    tls jacob.jh.clark@googlemail.com
+    prometheus
     redir 307 {
         https://www.{host}{uri}
     }
@@ -7,54 +8,71 @@ jacob.uk.com {
 
 www.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
+    prometheus
     gzip
     proxy  / 127.0.0.1:3000
 }
 
+ngaas.jacob.uk.com {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus
+    redir 307 {
+        https://ngaas.api.jacob.uk.com
+    }
+}
+
 ngaas.api.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
+    prometheus
     gzip
     proxy  / 127.0.0.1:3001
 }
 
 devnews.api.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
+    prometheus
     gzip
     proxy  / 127.0.0.1:3002
 }
 
 devnews.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
+    prometheus
     gzip
     proxy  / 127.0.0.1:3003
 }
 
 corscontainer.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
+    prometheus
     gzip
     proxy  / 127.0.0.1:3004
 }
 
 blog.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
+    prometheus
     gzip
     proxy  / 127.0.0.1:3005
 }
 
 grafana.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
+    prometheus
     gzip
     proxy  / 127.0.0.1:3006
 }
 
 cadvisor.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
+    prometheus
     gzip
     proxy  / 127.0.0.1:8080
 }
 
 prometheus.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
+    prometheus
     gzip
     proxy  / 127.0.0.1:9090
 }

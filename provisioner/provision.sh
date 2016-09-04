@@ -12,7 +12,7 @@ service docker start
 
 # Set up Caddy
 echo "Bringing up Caddy"
-curl https://getcaddy.com | bash
+curl https://getcaddy.com | bash -s cors,filemanager,git,hugo,ipfilter,minify,prometheus,ratelimit,realip,search,upload,mailout,digitalocean
 groupadd -g 33 www-data
 useradd -g www-data --no-user-group --home-dir /var/www --no-create-home --shell /usr/sbin/nologin --system --uid 33 www-data
 mkdir /etc/caddy
@@ -23,17 +23,18 @@ chmod 0770 /etc/ssl/caddy
 touch /var/log/access.log
 chown -R www-data:www-data /var/log/access.log
 
+# Enable startup provisioner
+echo "Bringing up systemd"
+systemctl daemon-reload
+systemctl start startup-provisioner.service
+systemctl enable startup-provisioner.service
+systemctl start caddy.service
+systemctl enable caddy.service
+
 # Set up blog
 git clone https://github.com/imjacobclark/blog.jacob.uk.com.git /etc/blog.jacob.uk.com
 adduser --disabled-password --gecos "" jekyll
 chown jekyll:jekyll /etc/blog.jacob.uk.com/
-
-# Enable startup provisioner
-echo "Bringing up systemd"
-systemctl daemon-reload
-systemctl enable startup-provisioner.service
-systemctl start caddy.service
-systemctl enable caddy.service
 
 # Spin up containers
 echo "Bringing up main container infrastructure"
