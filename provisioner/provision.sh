@@ -26,7 +26,6 @@ chown -R www-data:www-data /var/log/access.log
 # Enable startup provisioner
 echo "Bringing up systemd"
 systemctl daemon-reload
-systemctl start startup-provisioner.service
 systemctl enable startup-provisioner.service
 systemctl start caddy.service
 systemctl enable caddy.service
