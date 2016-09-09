@@ -13,6 +13,21 @@ www.jacob.uk.com {
     proxy  / 127.0.0.1:3000
 }
 
+jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com
+    prometheus 0.0.0.0:9180
+    redir 307 {
+        https://www.{host}{uri}
+    }
+}
+
+www.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:3000
+}
+
 ngaas.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
     prometheus 0.0.0.0:9180
@@ -75,4 +90,36 @@ prometheus.jacob.uk.com {
     prometheus 0.0.0.0:9180
     gzip
     proxy  / 127.0.0.1:9090
+}
+
+github.jacob.uk.com {
+    tls jacob.jh.clark@googlemail.com
+    prometheus 0.0.0.0:9180
+    redir 307 {
+        https://github.com/imjacobclark
+    }
+}
+
+twtr.jacob.uk.com {
+    tls jacob.jh.clark@googlemail.com
+    prometheus 0.0.0.0:9180
+    redir 307 {
+        https://twitter.com/imjacobclark
+    }
+}
+
+fcbk.jacob.uk.com {
+    tls jacob.jh.clark@googlemail.com
+    prometheus 0.0.0.0:9180
+    redir 307 {
+        https://www.facebook.com/imjacobclark
+    }
+}
+
+lnkdin.jacob.uk.com {
+    tls jacob.jh.clark@googlemail.com
+    prometheus 0.0.0.0:9180
+    redir 307 {
+        https://www.linkedin.com/in/imjacobclark
+    }
 }

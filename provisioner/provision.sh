@@ -1,15 +1,3 @@
-# Set up enviroment
-echo 'DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4 --iptables=false"' >> /etc/environment
-source /etc/environment
-
-# Enable Firewall
-sed -i -e "s/ENABLED=no/ENABLED=yes/g" /etc/ufw/ufw.conf
-ufw default deny incoming
-ufw default allow outgoing
-ufw allow ssh
-ufw allow proto tcp from any to any port 80,443
-ufw enable
-
 # Create swap file
 fallocate -l 4G /swapfile
 chmod 600 /swapfile
