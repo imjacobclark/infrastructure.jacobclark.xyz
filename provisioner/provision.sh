@@ -44,17 +44,19 @@ adduser --disabled-password --gecos "" jekyll
 chown jekyll:jekyll /etc/blog.jacob.uk.com/
 
 # Spin up containers
-echo "Bringing up main container infrastructure"
-docker run --restart=always -d -p 3000:3000 --name jacob.uk.com imjacobclark/jacob.uk.com
-docker run --restart=always -d -p 3001:3000 --name ngaas.jacob.uk.com imjacobclark/ngaas
-docker run --restart=always -d -p 3002:3000 --name api.devnews.today imjacobclark/devnews-core
-docker run --restart=always -d -p 3003:3000 --name devnews.today imjacobclark/devnews-web
-docker run --restart=always -d -p 3004:3000 --name cors-container imjacobclark/cors-container
-docker run --restart=always -d -p 3005:4000 --volume=/etc/blog.jacob.uk.com:/srv/jekyll --name=jekyll jekyll/jekyll
+echo "Bringing up monitoring container infrastructure"
+docker run --restart=always -d -p 9000:9000 -p 12201:12201 --name graylog graylog2/allinone
+docker run --restart=always -d --name=grafana -p 3006:3000 --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 grafana/grafana
+docker run --restart=always --volume=/:/rootfs:ro --volume=/var/run:/var/run:rw --volume=/sys:/sys:ro --volume=/var/lib/docker/:/var/lib/docker:ro --publish=8080:8080 --detach=true --name=cadvisor --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 google/cadvisor:latest
+docker run --restart=always -d --name=prometheus -p 9090:9090 -v /etc/prometheus.yml:/etc/prometheus/prometheus.yml --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 prom/prometheus -config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000
+docker run --restart=always -d --name=node-exporter -p 9100:9100 -v "/proc:/host/proc" -v "/sys:/host/sys" -v "/:/rootfs" --net="host" --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 prom/node-exporter -collector.procfs /host/proc -collector.sysfs /host/proc -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)"
+
 
 # Spin up containers
-echo "Bringing up monitoring container infrastructure"
-docker run --restart=always -d --name=grafana -p 3006:3000 grafana/grafana
-docker run --restart=always --volume=/:/rootfs:ro --volume=/var/run:/var/run:rw --volume=/sys:/sys:ro --volume=/var/lib/docker/:/var/lib/docker:ro --publish=8080:8080 --detach=true --name=cadvisor google/cadvisor:latest
-docker run --restart=always -d --name=prometheus -p 9090:9090 -v /etc/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus -config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000
-docker run --restart=always -d --name=node-exporter -p 9100:9100 -v "/proc:/host/proc" -v "/sys:/host/sys" -v "/:/rootfs" --net="host" prom/node-exporter -collector.procfs /host/proc -collector.sysfs /host/proc -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)"
+echo "Bringing up main container infrastructure"
+docker run --restart=always -d -p 3000:3000 --name jacob.uk.com --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 imjacobclark/jacob.uk.com
+docker run --restart=always -d -p 3001:3000 --name ngaas.jacob.uk.com --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 imjacobclark/ngaas
+docker run --restart=always -d -p 3002:3000 --name api.devnews.today --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 imjacobclark/devnews-core
+docker run --restart=always -d -p 3003:3000 --name devnews.today --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 imjacobclark/devnews-web
+docker run --restart=always -d -p 3004:3000 --name cors-container --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 imjacobclark/cors-container
+docker run --restart=always -d -p 3005:4000 --volume=/etc/blog.jacob.uk.com:/srv/jekyll --name=jekyll --log-driver=gelf --log-opt gelf-address=udp://localhost:12201 jekyll/jekyll
