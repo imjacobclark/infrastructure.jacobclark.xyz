@@ -1,3 +1,7 @@
+# Set up enviroment
+echo 'DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4 --iptables=false"' >> /etc/environment
+source /etc/environment
+
 # Enable Firewall
 sed -i -e "s/ENABLED=no/ENABLED=yes/g" /etc/ufw/ufw.conf
 ufw default deny incoming
@@ -24,7 +28,6 @@ apt-get update
 apt-get purge lxc-docker
 apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 apt-get install -y docker-engine
-DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4 --iptables=false"
 service docker start
 
 # Set up Caddy
