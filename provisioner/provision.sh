@@ -1,9 +1,10 @@
 # Enable Firewall
+sed -i -e "s/ENABLED=no/ENABLED=yes/g" /etc/ufw/ufw.conf
+ufw default deny incoming
+ufw default allow outgoing
 ufw allow ssh
-ufw allow http
-ufw allow https
+ufw allow proto tcp from any to any port 80,443
 ufw enable
-ufw status verbose
 
 # Create swap file
 fallocate -l 4G /swapfile
@@ -23,6 +24,7 @@ apt-get update
 apt-get purge lxc-docker
 apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 apt-get install -y docker-engine
+DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4 --iptables=false"
 service docker start
 
 # Set up Caddy
