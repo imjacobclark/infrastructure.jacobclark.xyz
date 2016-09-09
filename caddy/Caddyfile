@@ -70,7 +70,7 @@ cadvisor.jacob.uk.com {
     proxy  / 127.0.0.1:8080
 }
 
-prometheus 0.0.0.0:9180.jacob.uk.com {
+prometheus.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
     prometheus 0.0.0.0:9180
     gzip
