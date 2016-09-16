@@ -48,11 +48,11 @@ www.jacobclark.xyz {
     proxy  / 127.0.0.1:3000
 }
 
-ngaas.jacob.uk.com {
+xn--hs8h.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
     prometheus 0.0.0.0:9180
     redir 307 {
-        https://ngaas.api.jacob.uk.com
+        https://github.com/imjacobclark
     }
 }
 
