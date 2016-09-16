@@ -1,8 +1,18 @@
 jacob.uk.com {
     tls jacob.jh.clark@googlemail.com
     prometheus 0.0.0.0:9180
+    minify
     redir 307 {
         https://www.{host}{uri}
+    }
+    
+    header {
+        #Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
+        Content-Security-Policy "default-src https:"
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        X-XSS-Protection "1; mode=block"
     }
 }
 
@@ -10,7 +20,17 @@ www.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
     prometheus 0.0.0.0:9180
     gzip
+    minify
     proxy  / 127.0.0.1:3000
+    
+    header {
+        Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
+        Content-Security-Policy "default-src https:"
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        X-XSS-Protection "1; mode=block"
+    }
 }
 
 jacobclark.xyz {
