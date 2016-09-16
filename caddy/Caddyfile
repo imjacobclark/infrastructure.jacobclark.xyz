@@ -1,7 +1,6 @@
 jacob.uk.com {
     tls jacob.jh.clark@googlemail.com
     prometheus 0.0.0.0:9180
-    minify
     redir 307 {
         https://www.{host}{uri}
     }
@@ -20,7 +19,6 @@ www.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
     prometheus 0.0.0.0:9180
     gzip
-    minify
     proxy  / 127.0.0.1:3000
     
     header / {
