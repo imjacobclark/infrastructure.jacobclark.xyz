@@ -39,9 +39,9 @@ systemctl start caddy.service
 systemctl enable caddy.service
 
 # Set up blog
-git clone https://github.com/imjacobclark/blog.jacob.uk.com.git /etc/blog.jacob.uk.com
+git clone https://github.com/imjacobclark/blog.jacob.uk.com.git /etc/blog.jacobclark.xyz
 adduser --disabled-password --gecos "" jekyll
-chown jekyll:jekyll /etc/blog.jacob.uk.com/
+chown jekyll:jekyll /etc/blog.jacobclark.xyz
 
 # Spin up containers
 echo "Bringing up monitoring container infrastructure"
@@ -53,9 +53,9 @@ docker run --restart=always -d --name=node-exporter -p 9100:9100 -v "/proc:/host
 
 # Spin up containers
 echo "Bringing up main container infrastructure"
-docker run --restart=always -d -p 3000:8080 --name jacob.uk.com imjacobclark/jacob.uk.com
-docker run --restart=always -d -p 3001:3000 --name ngaas.jacob.uk.com imjacobclark/ngaas
+docker run --restart=always -d -p 3000:8080 --name jacobclark.xyz imjacobclark/jacob.uk.com
+docker run --restart=always -d -p 3001:3000 --name ngaas.jacobclark.xyz imjacobclark/ngaas
 docker run --restart=always -d -p 3002:3000 --name api.devnews.today imjacobclark/devnews-core
 docker run --restart=always -d -p 3003:3000 --name devnews.today imjacobclark/devnews-web
 docker run --restart=always -d -p 3004:3000 --name cors-container imjacobclark/cors-container
-docker run --restart=always -d -p 3005:4000 --volume=/etc/blog.jacob.uk.com:/srv/jekyll --name=jekyll jekyll/jekyll
+docker run --restart=always -d -p 3005:4000 --volume=/etc/blog.jacobclark.xyz:/srv/jekyll --name=jekyll jekyll/jekyll
