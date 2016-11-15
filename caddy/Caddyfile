@@ -1,3 +1,92 @@
+jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com
+    prometheus 0.0.0.0:9180
+    redir 307 {
+        https://www.{host}{uri}
+    }
+    
+    header / {
+        Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
+        Content-Security-Policy "default-src https:"
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        X-XSS-Protection "1; mode=block"
+    }
+}
+
+www.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:3000
+    
+    header / {
+        Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
+        Content-Security-Policy "default-src https:"
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        X-XSS-Protection "1; mode=block"
+    }
+}
+
+ngaas.api.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:3001
+}
+
+devnews.api.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:3002
+}
+
+devnews.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:3003
+}
+
+corscontainer.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:3004
+}
+
+blog.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:3005
+}
+
+grafana.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:3006
+}
+
+cadvisor.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:8080
+}
+
+prometheus.jacobclark.xyz {
+    tls jacob.jh.clark@googlemail.com 
+    prometheus 0.0.0.0:9180
+    gzip
+    proxy  / 127.0.0.1:9090
+}
+
 jacob.uk.com {
     tls jacob.jh.clark@googlemail.com
     prometheus 0.0.0.0:9180
@@ -32,99 +121,10 @@ www.jacob.uk.com {
     }
 }
 
-jacobclark.xyz {
-    tls jacob.jh.clark@googlemail.com
-    prometheus 0.0.0.0:9180
-    redir 307 {
-        https://www.{host}{uri}
-    }
-    
-    header / {
-        Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
-        Content-Security-Policy "default-src https:"
-        Strict-Transport-Security "max-age=31536000"
-        X-Content-Type-Options "nosniff"
-        X-Frame-Options "SAMEORIGIN"
-        X-XSS-Protection "1; mode=block"
-    }
-}
-
-www.jacobclark.xyz {
-    tls jacob.jh.clark@googlemail.com 
-    prometheus 0.0.0.0:9180
-    gzip
-    proxy  / 127.0.0.1:3000
-    
-    header / {
-        Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
-        Content-Security-Policy "default-src https:"
-        Strict-Transport-Security "max-age=31536000"
-        X-Content-Type-Options "nosniff"
-        X-Frame-Options "SAMEORIGIN"
-        X-XSS-Protection "1; mode=block"
-    }
-}
-
-ngaas.api.jacob.uk.com {
-    tls jacob.jh.clark@googlemail.com 
-    prometheus 0.0.0.0:9180
-    gzip
-    proxy  / 127.0.0.1:3001
-}
-
-devnews.api.jacob.uk.com {
-    tls jacob.jh.clark@googlemail.com 
-    prometheus 0.0.0.0:9180
-    gzip
-    proxy  / 127.0.0.1:3002
-}
-
-devnews.jacob.uk.com {
-    tls jacob.jh.clark@googlemail.com 
-    prometheus 0.0.0.0:9180
-    gzip
-    proxy  / 127.0.0.1:3003
-}
-
-corscontainer.jacob.uk.com {
-    tls jacob.jh.clark@googlemail.com 
-    prometheus 0.0.0.0:9180
-    gzip
-    proxy  / 127.0.0.1:3004
-}
-
 blog.jacob.uk.com {
     tls jacob.jh.clark@googlemail.com 
     prometheus 0.0.0.0:9180
     redir 301 {
         https://blog.jacobclark.xyz{uri}
     }
-}
-
-blog.jacobclark.xyz {
-    tls jacob.jh.clark@googlemail.com 
-    prometheus 0.0.0.0:9180
-    gzip
-    proxy  / 127.0.0.1:3005
-}
-
-grafana.jacob.uk.com {
-    tls jacob.jh.clark@googlemail.com 
-    prometheus 0.0.0.0:9180
-    gzip
-    proxy  / 127.0.0.1:3006
-}
-
-cadvisor.jacob.uk.com {
-    tls jacob.jh.clark@googlemail.com 
-    prometheus 0.0.0.0:9180
-    gzip
-    proxy  / 127.0.0.1:8080
-}
-
-prometheus.jacob.uk.com {
-    tls jacob.jh.clark@googlemail.com 
-    prometheus 0.0.0.0:9180
-    gzip
-    proxy  / 127.0.0.1:9090
 }
