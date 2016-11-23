@@ -53,7 +53,7 @@ docker run --restart=always -d --name=node-exporter -p 9100:9100 -v "/proc:/host
 
 # Spin up containers
 echo "Bringing up main container infrastructure"
-docker run --restart=always -d -p 3000:8080 --name jacobclark.xyz imjacobclark/jacob.uk.com
+docker run --restart=always -d -p 3000:8080 --name jacobclark.xyz imjacobclark/jacobclark.xyz
 docker run --restart=always -d -p 3001:3000 --name ngaas.jacobclark.xyz imjacobclark/ngaas
 docker run --restart=always -d -p 3002:3000 --name api.devnews.today imjacobclark/devnews-core
 docker run --restart=always -d -p 3003:3000 --name devnews.today imjacobclark/devnews-web
