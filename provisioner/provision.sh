@@ -39,7 +39,7 @@ systemctl start caddy.service
 systemctl enable caddy.service
 
 # Set up blog
-git clone https://github.com/imjacobclark/blog.jacob.uk.com.git /etc/blog.jacobclark.xyz
+git clone https://github.com/imjacobclark/blog.jacobclark.xyz.git /etc/blog.jacobclark.xyz
 adduser --disabled-password --gecos "" jekyll
 chown jekyll:jekyll /etc/blog.jacobclark.xyz
 
