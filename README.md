@@ -15,7 +15,7 @@ ubuntu-16-04-x64, lon1, 512mb.
 
 * 4GB swap file 
 * Docker for application runtime
-* Caddy for HTTP
+* Caddy for HTTP (with Lets Encrypt)
 * Systemd for process management
 * Prometheus for metrics and monitoring
 * Grafana for prometheus dashboards
