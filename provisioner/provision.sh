@@ -39,6 +39,8 @@ systemctl start caddy.service
 systemctl enable caddy.service
 
 # Set up blog
+apt-get -y install ruby ruby-dev make gcc nodejs
+gem install jekyll github-pages --no-rdoc --no-ri
 git clone https://github.com/imjacobclark/blog.jacobclark.xyz.git /etc/blog.jacobclark.xyz
 adduser --disabled-password --gecos "" jekyll
 chown jekyll:jekyll /etc/blog.jacobclark.xyz
@@ -50,7 +52,6 @@ docker run --restart=always --volume=/:/rootfs:ro --volume=/var/run:/var/run:rw 
 docker run --restart=always -d --name=prometheus -p 9090:9090 -v /etc/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus -config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000
 docker run --restart=always -d --name=node-exporter -p 9100:9100 -v "/proc:/host/proc" -v "/sys:/host/sys" -v "/:/rootfs" --net="host" prom/node-exporter -collector.procfs /host/proc -collector.sysfs /host/proc -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($|/)"
 
-
 # Spin up containers
 echo "Bringing up main container infrastructure"
 docker run --restart=always -d -p 3000:8080 --name jacobclark.xyz imjacobclark/jacobclark.xyz
@@ -58,4 +59,3 @@ docker run --restart=always -d -p 3001:3000 --name ngaas.jacobclark.xyz imjacobc
 docker run --restart=always -d -p 3002:3000 --name api.devnews.today imjacobclark/devnews-core
 docker run --restart=always -d -p 3003:3000 --name devnews.today imjacobclark/devnews-web
 docker run --restart=always -d -p 3004:3000 --name cors-container imjacobclark/cors-container
-docker run --restart=always -d -p 3005:4000 --volume=/etc/blog.jacobclark.xyz:/srv/jekyll --name=jekyll jekyll/jekyll
