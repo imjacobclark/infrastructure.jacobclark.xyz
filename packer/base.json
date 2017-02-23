@@ -35,6 +35,11 @@
             "destination": "/etc/systemd/system/caddy.service"
         },
         {
+            "type": "file",
+            "source": "./systemd/jekyll.service",
+            "destination": "/etc/systemd/system/jekyll.service"
+        },
+        {
             "type": "shell",
             "script": "./provisioner/provision.sh"
         }
