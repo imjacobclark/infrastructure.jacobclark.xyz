@@ -44,6 +44,8 @@ gem install jekyll github-pages --no-rdoc --no-ri
 git clone https://github.com/imjacobclark/blog.jacobclark.xyz.git /etc/blog.jacobclark.xyz
 adduser --disabled-password --gecos "" jekyll
 chown jekyll:jekyll /etc/blog.jacobclark.xyz
+systemctl start jekyll.service
+systemctl enable jekyll.service
 
 # Spin up containers
 echo "Bringing up monitoring container infrastructure"
