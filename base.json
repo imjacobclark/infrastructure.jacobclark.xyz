@@ -1,0 +1,26 @@
+{
+    "builders": [
+        {
+            "type": "digitalocean",
+            "api_token": "{{API_KEY}}",
+            "image": "ubuntu-18-10-x64",
+            "region": "lon1",
+            "size": "s-1vcpu-1gb",
+            "ssh_username": "root",
+            "ipv6": true,
+            "monitoring": true,
+            "private_networking": true
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "./http-server.service",
+            "destination": "/etc/systemd/system/http-server.service"
+        },
+        {
+            "type": "shell",
+            "script": "./provision.sh"
+        }
+    ]
+}

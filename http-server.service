@@ -1,0 +1,12 @@
+[Unit]
+Description=http-server autorun
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+ExecStart=/usr/bin/sbcl --load /root/cl-servers/http-server.lisp --eval "(server)"
+SyslogIdentifier=http-server-autorun
+RemainAfterExit=yes
+ 
+[Install]
+WantedBy=multi-user.target
