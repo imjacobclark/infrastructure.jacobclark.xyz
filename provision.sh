@@ -15,5 +15,9 @@ git clone https://github.com/imjacobclark/cl-servers.git ~/cl-servers
 
 # Enable startup provisioner
 systemctl daemon-reload
+
 systemctl enable http-server.service
 systemctl start http-server.service
+
+systemctl enable simple-tcp-server.service
+systemctl start simple-tcp-server.service

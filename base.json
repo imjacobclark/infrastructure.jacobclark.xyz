@@ -19,6 +19,11 @@
             "destination": "/etc/systemd/system/http-server.service"
         },
         {
+            "type": "file",
+            "source": "./basic-tcp-server.service",
+            "destination": "/etc/systemd/system/simple-tcp-server.service"
+        },
+        {
             "type": "shell",
             "script": "./provision.sh"
         }
